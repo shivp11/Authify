@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="col-sm-10 col-md-8 col-lg-6 m-auto d-table h-100">
+    <div class="d-table-cell align-middle">
+      <div class="card">
+        <div class="card-body">
+          <div class="text-center mt-3">
+            <h2 class="h2">Register</h2>
+          </div>
+          <div class="m-sm-4">
+            <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+              <div class="mb-3">
+                <label class="form-label">Full name</label>
+                <input type="text" class="form-control" name="name" ngModel>
+              </div>
+              <p class="text-danger pl-1" *ngIf="errors.name">{{errors.name}}</p>
+              <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" ngModel>
+              </div>
+              <p class="text-danger pl-1" *ngIf="errors.email">{{errors.email}}</p>
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" ngModel>
+              </div>
+              <p class="text-danger pl-1" *ngIf="errors.password">{{errors.password}}</p>
+              <div class="mb-3">
+                <label class="form-label">Retype Password</label>
+                <input type="password" class="form-control" name="password_confirmation" ngModel>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </div>
+              </div>
+            </form>
+            <a routerLink="/login" class="text-center">I already have a membership</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="col-sm-10 col-md-8 col-lg-6 m-auto d-table h-100">
+    <div class="d-table-cell align-middle">
+      <div class="card">
+        <div class="card-body">
+          <div class="text-center mt-3">
+            <h2 class="h2">Log In</h2>
+          </div>
+          <ngx-spinner  type="ball-scale-multiple"></ngx-spinner>
+          <p class="text-danger pl-1" *ngIf="error">{{error}}</p>
+          <div class="m-sm-4">
+            <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+              <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" name="email" ngModel>
+              </div>
+              <p class="text-danger pl-1" *ngIf="errors.email">{{errors.email}}</p>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" ngModel>
+              </div>
+              <p class="text-danger pl-1" *ngIf="errors.password">{{errors.password}}</p>
+              <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+            <p class="mb-1 mt-1">
+              <a routerLink="/forgot-password">I forgot my password</a>
+            </p>
+            <p class="mb-0">
+              <a routerLink="/register" class="text-center">Register a new membership</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
