@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="modal-content mt-3">
+        <form class="form" #updateForm="ngForm" (ngSubmit)="updateUser(updateForm)">
+            <div class="modal-header">
+                <h4 class="modal-title" id="model_title">Update User</h4>
+                <button type="button" class="btn-close" mat-dialog-close></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name">Name :</label><br>
+                    <input type="text" #name="ngModel" name="name" id="name" placeholder="Full Name" class="form-control" required minlength="4"
+                    [(ngModel)]="data.name">
+                    <span class="text-danger" *ngIf="name.invalid && name.touched">
+                        Name is required and Name must be at least 4 characters long.
+                    </span>
+                </div><br>
+                <div class="form-group">
+                    <label for="Email">Email :</label><br>
+                    <input type="email" #email="ngModel" name="email" id="email" placeholder="Ex. pat@example.com" class="form-control" required email
+                    [(ngModel)]="data.email">
+                    <span class="text-danger" *ngIf="email.invalid && email.touched">
+                        Email-id is not valid.
+                    </span>
+                </div><br>
+                <div class="form-group">
+                    <label for="name">Role :</label><br>
+                    <select class="form-control" #role="ngModel" name="role" id="role" [(ngModel)]="data.role">
+                        <option value="Admin">Admin</option>
+                        <option value="Subscriber">Subscriber</option>
+                    </select>
+                </div><br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div><br>      
+        </form>
+    </div>
+</div>

@@ -46,13 +46,13 @@ export class AuthenticationService {
     });
   }
 
+
   // User Info
   user(){
     const user:any = localStorage.getItem('user');
     const userObj:any = JSON.parse(user);
     // console.log(userObj);
-    
-    const token =userObj.token;
+    const token =userObj?.token;
     const headers = new HttpHeaders({
       Authorization: 'Bearer '+ token, 
     });
@@ -63,9 +63,9 @@ export class AuthenticationService {
   // Logout
   logout(allDevice: boolean){
     const user: any = localStorage.getItem('user');
-    const userObj = JSON.parse(user);
+    const userObj = JSON?.parse(user);
 
-    const token = userObj.token;
+    const token = userObj?.token;
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
@@ -111,13 +111,37 @@ export class AuthenticationService {
       return this.http.get(this.apiUrl+'users/')
     }
     
-    updateUsers(id: any, name:string, email:string){
+    updateUsers(id: any, name:string, email:string, role:string){
       const data={
         id:id,
         name:name,
         email:email,
+        role:role,
       }
       return this.http.post(this.apiUrl+'updateUsers/'+id, data)
+    }
+
+    ImageUpload(id: any, image:File){
+      const formData = new FormData();
+      formData.append("file", image)
+      return this.http.post(this.apiUrl+'image/'+id, formData)
+    }
+
+    addUser(id: any, name:string, email:string, role:string){
+      const data={
+        id:id,
+        name:name,
+        email:email,
+        role:role,
+      }
+      return this.http.post(this.apiUrl+'addUser', data)
+    }
+
+    deleteUser(id: any){
+      const data={
+        id:id,
+      }
+      return this.http.post(this.apiUrl+'deleteUser/'+id, data)
     }
 
 }

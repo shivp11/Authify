@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="modal-content mt-3">
+        <form class="form" #addForm="ngForm" (ngSubmit)="addPost(addForm)">
+            <div class="modal-header">
+                <h4 class="modal-title" id="model_title">Add Post</h4>
+                <button type="button" class="btn-close" mat-dialog-close></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name">Post Title :</label><br>
+                    <input type="text" #post_title="ngModel" name="post_title" id="post_title" placeholder="Title"
+                        class="form-control" required ngModel>
+                    <span class="text-danger" *ngIf="post_title.invalid && post_title.touched">
+                        Post_title is required.
+                    </span>
+                </div><br>
+                <div class="form-group">
+                    <label for="name">Post Author :</label><br>
+                    <input type="text" #post_author="ngModel" name="post_author" id="post_author"
+                        placeholder="Author Name" class="form-control" required ngModel>
+                    <span class="text-danger" *ngIf="post_author.invalid && post_author.touched">
+                        Post_author is required.
+                    </span>
+                </div><br>
+                <div class="form-group">
+                    <label for="name">Post Status :</label><br>
+                    <select #post_status="ngModel" name="post_status" id="post_status" ngModel>
+                        <option value="Approved">Approve</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div><br>
+                <div class="form-group">
+                    <label for="Email">Post Image :</label><br>
+                    <input type="file" class="form-control" #post_image="ngModel" name="post_image" id="post_image" rows="7" ngModel required>
+                </div><br>
+                <div class="form-group">
+                    <label for="Email">Post Content :</label><br>
+                    <textarea class="form-control" #post_content="ngModel" name="post_content" id="post_content" rows="7" ngModel></textarea>
+                    <span class="text-danger" *ngIf="post_content.invalid && post_content.touched">
+                        Post_content is required.
+                    </span>
+                </div><br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-100" [disabled]="addForm.invalid">Add Post</button>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div><br>
+        </form>
+    </div>
+</div>

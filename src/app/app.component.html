@@ -3,9 +3,10 @@
     <div class="main">
         <app-header *ngIf="loggedIn"></app-header>
         <app-navbar *ngIf="!loggedIn"></app-navbar>
+            <ngx-ui-loader></ngx-ui-loader>
         <main class="content">
             <router-outlet></router-outlet>
         </main>
         <app-footer *ngIf="loggedIn"></app-footer>
     </div>
-</div>      
+</div>

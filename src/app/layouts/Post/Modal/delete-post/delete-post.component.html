@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="modal-content mt-3">
+        <form class="form" #deleteForm="ngForm" (ngSubmit)="deletePost(deleteForm)">
+            <div class="modal-header">
+                <h4 class="modal-title" id="model_title">Delete Post</h4>
+                <button type="button" class="btn-close" mat-dialog-close></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p>Are you Sure !!! you want to Delete this Post ?</p><br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger w-100">Delete</button>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div><br>      
+        </form>
+    </div>
+</div>

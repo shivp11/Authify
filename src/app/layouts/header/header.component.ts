@@ -10,14 +10,12 @@ export class HeaderComponent implements OnInit {
   
   loggedIn:boolean = false;
 
-  constructor ( private auth:AuthenticationService ){}
-  user:any;
-  ngOnInit(): void {
+  imagePath:any = "http://127.0.0.1:8000/angular/images/"
+  constructor ( private auth:AuthenticationService ){
     this.auth.status().subscribe((res) => {
       this.loggedIn = res;
       this.auth.user().subscribe((res:any)=>{
         this.user = res;  
-        // console.log(this.user);
         },
         err=>{
           console.log(err);
@@ -25,5 +23,9 @@ export class HeaderComponent implements OnInit {
     }, (err) => {
       console.log(err);
     })
+  }
+  user:any;
+  ngOnInit(): void {
+
   }
 }

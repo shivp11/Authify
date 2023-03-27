@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { environment } from './../environments/environment';
 import { DashboardComponent } from './Auth/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './Auth/forgot-password/forgot-password.component';
 import { HomeComponent } from './Auth/home/home.component';
@@ -13,6 +12,9 @@ import { UserinfoComponent } from './layouts/User/userinfo/userinfo.component';
 import { AuthGuard } from './services/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ManagePostComponent } from './layouts/Post/manage-post/manage-post.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,12 +26,14 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'userinfo', component: UserinfoComponent, canActivate: [AuthGuard] },
+  { path: 'postinfo', component: ManagePostComponent, canActivate: [AuthGuard] },
 ];
 
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),
     BrowserAnimationsModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
   ToastrModule.forRoot()],
   exports: [RouterModule]
 })
