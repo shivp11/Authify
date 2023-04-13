@@ -1,3 +1,4 @@
+<ngx-spinner color="#87d1d4" type="ball-scale-multiple"></ngx-spinner>
 <div class="container">
     <div class="modal-content mt-3">
         <form class="form" #addForm="ngForm" (ngSubmit)="addPost(addForm)">
@@ -10,7 +11,7 @@
                 <div class="form-group">
                     <label for="name">Post Title :</label><br>
                     <input type="text" #post_title="ngModel" name="post_title" id="post_title" placeholder="Title"
-                        class="form-control" required ngModel>
+                        class="form-control" required [(ngModel)]="posts.post_title">
                     <span class="text-danger" *ngIf="post_title.invalid && post_title.touched">
                         Post_title is required.
                     </span>
@@ -18,25 +19,30 @@
                 <div class="form-group">
                     <label for="name">Post Author :</label><br>
                     <input type="text" #post_author="ngModel" name="post_author" id="post_author"
-                        placeholder="Author Name" class="form-control" required ngModel>
+                        placeholder="Author Name" class="form-control" required [readonly]="userIn?.role != 'Admin'" ngModel="{{ userIn?.name }}">
+                    <input type="text" #id="ngModel" name="id" id="id"
+                        placeholder="Author Name" class="form-control" hidden ngModel="{{ userIn?.id }}">
                     <span class="text-danger" *ngIf="post_author.invalid && post_author.touched">
                         Post_author is required.
                     </span>
                 </div><br>
                 <div class="form-group">
                     <label for="name">Post Status :</label><br>
-                    <select #post_status="ngModel" name="post_status" id="post_status" ngModel>
+                    <select class="form-control" aria-placeholder="Select Option" #post_status="ngModel" name="post_status" id="post_status" [(ngModel)]="posts.post_status">
                         <option value="Approved">Approve</option>
                         <option value="Pending">Pending</option>
                     </select>
                 </div><br>
+                <div>
+                    
+                </div>
                 <div class="form-group">
                     <label for="Email">Post Image :</label><br>
-                    <input type="file" class="form-control" #post_image="ngModel" name="post_image" id="post_image" rows="7" ngModel required>
+                    <input type="file" class="form-control" #post_image="ngModel" name="post_image" id="post_image" (change)="ImageUpload($event)" ngModel required>
                 </div><br>
                 <div class="form-group">
                     <label for="Email">Post Content :</label><br>
-                    <textarea class="form-control" #post_content="ngModel" name="post_content" id="post_content" rows="7" ngModel></textarea>
+                    <textarea class="form-control" #post_content="ngModel" name="post_content" id="post_content" rows="7" [(ngModel)]="posts.post_content"></textarea>
                     <span class="text-danger" *ngIf="post_content.invalid && post_content.touched">
                         Post_content is required.
                     </span>

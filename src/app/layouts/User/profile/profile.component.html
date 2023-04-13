@@ -1,72 +1,77 @@
 <div *ngIf="user">
-<div class="page-header">
-  <div class="row align-items-center">
-    <div class="col-auto">
-      <img [src]="imagePath+user.profile" style="cursor: pointer;" class="rounded-circle" width="80" height="80"
-        onclick="event.preventDefault();document.getElementById('image').click();"><br>
-      <div class="col " style="text-align: right">
-        <input type="file" #image name="image" style="pointer-events: auto;" id="image" hidden
-         (change)="ImageUpload($event)" onchange="this.dispatchEvent(new InputEvent('input'))">
+  <div class="container pt-6">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <ngx-spinner color="#87d1d4" type="ball-scale-multiple"></ngx-spinner>
+          <img [src]="imagePath+userProfile?.profile" style="cursor: pointer;" class="rounded-circle" width="80"
+            height="80" onclick="event.preventDefault();document.getElementById('image').click();"><br>
+          <div class="col " style="text-align: right">
+            <input type="file" #image name="image" style="pointer-events: auto;" id="image" hidden
+              (change)="ImageUpload($event)" onchange="this.dispatchEvent(new InputEvent('input'))">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h2 class="page-title">{{ userProfile?.name }}</h2>
+          <div class="page-subtitle">
+            <div class="row">
+              <div class="col-auto">
+                <a href="#" class="text-reset">{{ userProfile?.role }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" style="margin-right: 0%; margin-left: 260px;">
+          <button hidden class="btn btn-primary align-right" style="margin-right: 0%;" type="submit"
+            (click)="image.click()">
+            Change picture
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <h2 class="page-title">{{ user?.name }}</h2>
-      <div class="page-subtitle">
-        <div class="row">
-          <div class="col-auto">
-            <a href="#" class="text-reset">{{ user?.role }}</a>
+    <br>
+    <div class="row">
+      <div class="card">
+        <ul class="nav nav-tabs" data-bs-toggle="tabs">
+          <li class="nav-item">
+            <a href="#tabs-details" class="nav-link active" data-bs-toggle="tab">Personal Details</a>
+          </li>
+        </ul>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane show active" id="tabs-details">
+              <form #userForm="ngForm" (ngSubmit)="updateProfile(userForm)">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <input type="hidden" name="id" value="{{ user.id }}">
+                      <label class="form-label">Name</label>
+                      <input type="text" #userName="ngModel" class="form-control" name="name" [(ngModel)]="user.name"
+                        dirty>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <input type="text" class="form-control" name="email" [(ngModel)]="user.email" disabled>
+                      <span class="text-danger"></span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label class="form-label">Role</label>
+                      <input type="text" class="form-control" name="role" [(ngModel)]="user.role" disabled>
+                      <span class="text-danger"></span>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="!userForm.dirty">Save Changes</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="col" style="margin-right: 0%; margin-left: 260px;">
-      <button hidden class="btn btn-primary align-right" style="margin-right: 0%;" type="submit" (click)="image.click()">
-        Change picture
-      </button>
-    </div>
   </div>
-</div>
-<br>
-<div class="row">
-  <div class="card">
-    <ul class="nav nav-tabs" data-bs-toggle="tabs">
-      <li class="nav-item">
-        <a href="#tabs-details" class="nav-link active" data-bs-toggle="tab">Personal Details</a>
-      </li>
-    </ul>
-    <div class="card-body">
-      <div class="tab-content">
-        <div class="tab-pane show active" id="tabs-details">
-          <form #userForm = "ngForm" (ngSubmit)="updateProfile(userForm)">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="mb-3">
-                  <input type="hidden" name="id" value="{{ user.id }}">
-                  <label class="form-label">Name</label>
-                  <input type="text" #userName = "ngModel" class="form-control" name="name" [(ngModel)]="user.name">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="text" class="form-control" name="email" [(ngModel)]="user.email" disabled>
-                  <span class="text-danger"></span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="mb-3">
-                  <label class="form-label">Role</label>
-                  <input type="text" class="form-control" name="role" [(ngModel)]="user.role" disabled>
-                  <span class="text-danger"></span>
-                </div>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 </div>

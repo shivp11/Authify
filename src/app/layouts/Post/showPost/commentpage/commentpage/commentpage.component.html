@@ -1,0 +1,101 @@
+<ngx-spinner color="#87d1d4" type="ball-scale-multiple"></ngx-spinner>
+<div class="container-fluid pt-5">
+    <!-- Blog Post Content Column -->
+
+    <div class="col-lg-8">
+        <!-- Blog Post -->
+
+        <!-- Title -->
+        <h1>{{ postByid?.post_title }}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+            by {{ postByid?.post_author }}
+        </p>
+        <hr>
+
+        <!-- Date/Time -->
+        <p><span class="glyphicon glyphicon-time"></span> Posted on {{ postByid?.created_at }}</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-responsive" [src]="imagePath+postByid?.post_image">
+
+        <hr>
+        <!-- Post Content -->
+        <p class="lead m-0"> <b class="fs-6">Content:- </b> {{ postByid?.post_content }}</p>
+        <hr class="mb-1">
+        <div class="mb-1">
+            <button (click)="showinput()" class="btn btn-primary fs-6 me-2 Comment" id="Comment"><i class="fa fa-comment fs-6"></i></button>
+            <button (click)="like(postByid?.id)" class="btn btn-success btn fs-6 me-2" ngModel><i class="fa fa-thumbs-up fs-6"></i> {{ count?.likecount }} </button>
+            <button (click)="dislike(postByid?.id)" class="btn btn-danger btn fs-6"><i class="fa fa-thumbs-down fs-6"></i> {{ count?.dislikecount }}</button>
+        </div>
+        <hr class="mt-0 pt-0">
+        <ul style="list-style-type:none" class="me-0 mb-2 p-0">
+            <li style="list-style-type:none" class="mt-0 mb-0" *ngFor="let comment of comments">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <img [src]="imagePathUser+comment?.user.profile" class="rounded-circle mt-0" width="30"
+                            height="30"><br>
+                    </div>
+                    <div class="col">
+                        <h1 class="fs-6 mb-0">{{ comment?.user.name }}</h1>
+                        <input type="hidden" id="comment_id" value="1">
+                        <div class="col-auto fs-6">
+                            <p class="fs-6 mb-0">{{ comment?.comment_content }}</p>
+                        </div>
+                    </div>
+                    <div class="col" style="margin-right: 0%; margin-left: 260px;">
+                        <a (click)="replyComment(comment?.id)" class="fs-6 me-2 reply" id="reply"> Reply</a>
+                    </div>
+                </div>
+
+                <ul style="list-style-type:none" class="">
+                    <li style="list-style-type:none" class="" *ngFor="let replycomment of replycomments">
+                        <div *ngIf="comment?.id === replycomment?.comment_id">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <img [src]="imagePathUser+replycomment?.profile" class="rounded-circle mt-0"
+                                        width="30" height="30"><br>
+                                </div>
+                                <div class="col">
+                                    <h1 class="fs-6 mb-0">{{ replycomment?.name }}</h1>
+                                    <input type="hidden" id="comment_id" value="1">
+                                    <div class="col-auto fs-6">
+                                        <p class="fs-6 mb-0">{{ replycomment?.comment_content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+
+        </ul>
+        <form (ngSubmit)="onSubmit(comment)" #comment="ngForm" [hidden]="wait">
+            <div class="input-group">
+                <img [src]="imagePathUser+LoggedInUserId?.profile" class="rounded-circle me-1 mt-0" width="30"
+                    height="30">
+                <input #comment_content="ngModel" type="text" class="rounded form-control" name="comment_content"
+                    placeholder="Enter Comment" aria-label="Input group example" aria-describedby="btnGroupAddon"
+                    ngModel required>
+                <button class="btn btn-primary input-group-text" id="btnGroupAddon"
+                    [disabled]="comment.invalid">Submit</button>
+            </div>
+        </form>
+
+        <form (ngSubmit)="onReplySubmit(replycomment)" #replycomment="ngForm" [hidden]="wait2">
+            <div class="input-group">
+                <img [src]="imagePathUser+LoggedInUserId?.profile" class="rounded-circle me-1 mt-0" width="30"
+                    height="30">
+                <input #comment_content="ngModel" type="text" class="rounded form-control" name="comment_content"
+                    placeholder="Enter Comment" aria-label="Input group example" aria-describedby="btnGroupAddon"
+                    ngModel required>
+                <button class="btn btn-primary input-group-text" id="btnGroupAddon"
+                    [disabled]="replycomment.invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

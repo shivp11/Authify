@@ -1,0 +1,12 @@
+
+<form (ngSubmit)="onSubmit(comment)" #comment="ngForm">
+    <div class="input-group p-1 mt-2">
+        <img [src]="imagePathUser+LoggedInUserId?.profile" class="rounded-circle me-1 mt-0" width="30"
+            height="30">
+        <input #comment_content="ngModel" type="text" class="rounded form-control" name="comment_content"
+            placeholder="Enter Comment" aria-label="Input group example" aria-describedby="btnGroupAddon"
+            ngModel required>
+        <button class="btn btn-primary input-group-text" id="btnGroupAddon"
+            [disabled]="comment.invalid">Submit</button>
+    </div>
+</form>

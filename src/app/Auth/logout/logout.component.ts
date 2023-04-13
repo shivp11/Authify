@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -17,14 +18,18 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+  userRole:any;
+  private isAuthenticated: boolean = false;
   logout(){
+    this.spinner.show();
     // console.log(this.checkbox);
-    this.auth.logout(this.checkbox).subscribe((res:any)=>{
+    this.auth.logout(this.checkbox).pipe( finalize(() => { 
+      this.spinner.hide();
+     })).subscribe((res:any)=>{
       console.log(res.message);
       // Redirect
       this.toastr.success(res.message);
-      localStorage.removeItem('user');
+      localStorage.removeItem('user');  
       this.auth.toggleLogin(false);
       this.router.navigate(['/login']);
     }, (err) =>{

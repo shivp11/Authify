@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
@@ -29,20 +30,29 @@ export class LoginComponent implements OnInit {
   onSubmit(form:NgForm){
     const email = form.value.email;
     const password = form.value.password;
-    this.auth.login(email, password).subscribe((res:any)=>{
+    this.spinner.show();
+    this.auth.login(email, password).pipe( finalize(() => { 
+      this.spinner.hide();
+     })).subscribe((res:any)=>{
       localStorage.setItem('user', JSON.stringify(res));
       
       this.auth.toggleLogin(true);
-      // redirect to dashboard
-      this.message = res.message + ' ' + res.name;
-      // console.log(this.message);
-      this.toastr.success(this.message);
-      this.router.navigate(['/dashboard']);
+
+      if (res.code == 200) {
+        this.toastr.success( res.message + ' ' + res.data.name);
+      }
+      if(res.data.role === 'Admin'){
+        this.router.navigate(['/dashboard']);
+      }else{
+        this.router.navigate(['/profile']);
+      }
     },
-    err=>{
-      this.errors = err.error.errors;
-      this.error = err.error.message;
-      console.log(this.error);
+    (err:any)=>{
+      console.log(err);
+      this.message = err;
+      if (this.message.error.code == 401) {
+        this.toastr.error(this.message.error.message);
+      }
     })
   }
 }

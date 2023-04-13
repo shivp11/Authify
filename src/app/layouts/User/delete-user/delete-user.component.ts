@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserinfoComponent } from '../userinfo/userinfo.component';
 
@@ -12,17 +14,24 @@ import { UserinfoComponent } from '../userinfo/userinfo.component';
 })
 export class DeleteUserComponent  implements OnInit{
   constructor(private auth: AuthenticationService, private toastr: ToastrService,
-    public dialogRef: MatDialogRef<UserinfoComponent>,
+    private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<UserinfoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
   
   ngOnInit(): void {}
 
   deleteUser(form: NgForm) {
     // console.log(form);
-    this.auth.deleteUser(this.data.id).subscribe(
+    this.spinner.show();
+    console.log(this.data.id);
+    
+    this.auth.deleteUser(this.data.id).pipe(finalize(() => {
+      this.spinner.hide();
+    })).subscribe(
       (resp) => {
+        console.log(resp);
+        
         this.data = resp;
-        if (this.data.status == 200) {
+        if (this.data.code == 200) {
           this.toastr.success(this.data.message);
         }
         this.onNoClick();
@@ -37,6 +46,7 @@ export class DeleteUserComponent  implements OnInit{
   }
 
   onNoClick(): void {
+    this.auth.filter('Add New User..!!');
     this.dialogRef.close();
   }
 }

@@ -14,6 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ManagePostComponent } from './layouts/Post/manage-post/manage-post.component';
+import { ShowpostComponent } from './layouts/Post/showPost/showpost/showpost.component';
+import { AdminGuard } from './services/ManageRole/admin.guard';
+import { SelecteduserComponent } from './layouts/User/SelectedUserModal/selecteduser/selecteduser.component';
+import { CommentpageComponent } from './layouts/Post/showPost/commentpage/commentpage/commentpage.component';
 
 
 const routes: Routes = [
@@ -23,12 +27,13 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'userinfo', component: UserinfoComponent, canActivate: [AuthGuard] },
-  { path: 'postinfo', component: ManagePostComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard, AdminGuard ] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'userinfo', component: UserinfoComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'postinfo', component: ManagePostComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'post', component: ShowpostComponent, canActivate: [AuthGuard] },
+  { path: 'comment/:id', component: CommentpageComponent, canActivate: [AuthGuard] },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),

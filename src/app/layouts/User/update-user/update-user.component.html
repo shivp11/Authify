@@ -1,37 +1,37 @@
+<ngx-spinner color="#87d1d4" type="ball-scale-multiple"></ngx-spinner>
 <div class="container">
-    <div class="modal-content mt-3">
+    <div class="modal-content mt-3" style="border-radius: 25px">
         <form class="form" #updateForm="ngForm" (ngSubmit)="updateUser(updateForm)">
             <div class="modal-header">
                 <h4 class="modal-title" id="model_title">Update User</h4>
                 <button type="button" class="btn-close" mat-dialog-close></button>
             </div>
             <!-- Modal body -->
-            <div class="modal-body">
+            <div class="modal-body" style="border-radius: 25px">
                 <div class="form-group">
                     <label for="name">Name :</label><br>
                     <input type="text" #name="ngModel" name="name" id="name" placeholder="Full Name" class="form-control" required minlength="4"
-                    [(ngModel)]="data.name">
-                    <span class="text-danger" *ngIf="name.invalid && name.touched">
-                        Name is required and Name must be at least 4 characters long.
-                    </span>
+                    [(ngModel)]="data.name" dirty>
                 </div><br>
                 <div class="form-group">
                     <label for="Email">Email :</label><br>
                     <input type="email" #email="ngModel" name="email" id="email" placeholder="Ex. pat@example.com" class="form-control" required email
-                    [(ngModel)]="data.email">
-                    <span class="text-danger" *ngIf="email.invalid && email.touched">
-                        Email-id is not valid.
-                    </span>
+                    [(ngModel)]="data.email" dirty>
+                </div><br>
+                <div class="form-group">
+                    <label for="Email">Profile Image :</label><br>
+                    <img [src]="imagePath+data.profile" class="rounded m-2" width="50" height="50">
+                    <input type="file" class="form-control" #profile="ngModel" name="profile" id="profile" (change)="ImageUpload($event)" ngModel dirty>
                 </div><br>
                 <div class="form-group">
                     <label for="name">Role :</label><br>
-                    <select class="form-control" #role="ngModel" name="role" id="role" [(ngModel)]="data.role">
+                    <select class="form-control" #role="ngModel" name="role" id="role" [(ngModel)]="data.role" dirty [disabled]="data.id === LoggedInUserID">
                         <option value="Admin">Admin</option>
                         <option value="Subscriber">Subscriber</option>
                     </select>
                 </div><br>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                    <button type="submit" class="btn btn-primary w-100" [disabled] = "!updateForm.dirty">Save Changes</button>
                 </div>
             </div>
             <!-- Modal footer -->

@@ -1,44 +1,44 @@
+<ngx-spinner color="#87d1d4" type="ball-scale-multiple"></ngx-spinner>
 <div class="container">
     <div class="modal-content mt-3">
         <form class="form" #updateForm="ngForm" (ngSubmit)="updatePost(updateForm)">
             <div class="modal-header">
-                <h4 class="modal-title" id="model_title">Add Post</h4>
+                <h4 class="modal-title" id="model_title">Update Post</h4>
                 <button type="button" class="btn-close" mat-dialog-close></button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="name">Post Title :</label><br>
+                    <label for="post_title">Post Title :</label><br>
                     <input type="text" #post_title="ngModel" name="post_title" id="post_title" placeholder="Title"
-                        class="form-control" required [(ngModel)]="data.post_title">
-                    <span class="text-danger" *ngIf="post_title.invalid && post_title.touched">
-                        Post_title is required.
-                    </span>
+                        class="form-control" required [(ngModel)]="data.post_title" dirty>
                 </div><br>
                 <div class="form-group">
-                    <label for="name">Post Author :</label><br>
+                    <label for="post_author">Post Author :</label><br>
                     <input type="text" #post_author="ngModel" name="post_author" id="post_author"
-                        placeholder="Author Name" class="form-control" required [(ngModel)]="data.post_author">
-                    <span class="text-danger" *ngIf="post_author.invalid && post_author.touched">
-                        Post_author is required.
-                    </span>
+                        placeholder="Author Name" class="form-control" required [(ngModel)]="data.post_author" dirty>
                 </div><br>
                 <div class="form-group">
-                    <label for="name">Post Status :</label><br>
-                    <select name="post_status" id="post_status" [(ngModel)]="data.post_status">
+                    <label for="post_status">Post Status :</label><br>
+                    <select class="form-control" name="post_status" id="post_status" [(ngModel)]="data.post_status" dirty>
                         <option value="Approved">Approve</option>
                         <option value="Pending">Pending</option>
                     </select>
                 </div><br>
                 <div class="form-group">
-                    <label for="Email">Post Content :</label><br>
+                    <label for="post_image">Post Image :</label><br>
+                    <img [src]="imagePath+data.post_image" class="rounded m-2" width="60" height="60">
+                    <input type="file" class="form-control" #post_image="ngModel" name="post_image" id="post_image" (change)="ImageUpload($event)" ngModel dirty>
+                </div><br>
+                <div class="form-group">
+                    <label for="post_content">Post Content :</label><br>
                     <textarea class="form-control" #post_content="ngModel" name="post_content" id="post_content" rows="7" [(ngModel)]="data.post_content"></textarea>
                     <span class="text-danger" *ngIf="post_content.invalid && post_content.touched">
                         Post_content is required.
                     </span>
                 </div><br>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                    <button type="submit" class="btn btn-primary w-100" [disabled]="!updateForm.dirty">Save Changes</button>
                 </div>
             </div>
             <!-- Modal footer -->

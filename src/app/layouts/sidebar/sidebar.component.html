@@ -1,19 +1,23 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" routerLink="/dashboard">
+        <a class="sidebar-brand" routerLink="/dashboard"  *ngIf="LoggedInUserRole === 'Admin'">
             <span class="align-middle">Dashboard</span>
         </a>
-
+        <a class="sidebar-brand" routerLink="/post"  *ngIf="LoggedInUserRole != 'Admin'">
+            <span class="align-middle">Authify</span>
+        </a>
+      <ngx-spinner color="#87d1d4" type="ball-scale-multiple"></ngx-spinner>
         <ul class="sidebar-nav">
             <li class="sidebar-header">
                 Pages
             </li>
-
-            <li class="sidebar-item ">
+       
+            <li class="sidebar-item" *ngIf="LoggedInUserRole === 'Admin'">
                 <a class="sidebar-link" routerLink="/dashboard">
                     <i class="align-middle fa fa-sliders"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
+
 
             <li class="sidebar-item">
                 <a class="sidebar-link" routerLink="/profile">
@@ -21,21 +25,26 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
+            <li class="sidebar-item" *ngIf="LoggedInUserRole === 'Admin'">
                 <a class="sidebar-link" routerLink="/userinfo">
-                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">User-Info</span>
+                    <i class="align-middle fa fa-sign-in"></i> <span class="align-middle">User-Info</span>
                 </a>
             </li>
 
-            <li class="sidebar-item">
+            <li class="sidebar-item" *ngIf="LoggedInUserRole === 'Admin'">
                 <a class="sidebar-link"  routerLink="/postinfo">
-                    <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Manage Posts</span>
+                    <i class="align-middle fa fa-user-plus"></i> <span class="align-middle">Manage Posts</span>
                 </a>
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-blank.html">
-                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
+                <a class="sidebar-link" routerLink="/post">
+                    <i class="align-middle fa fa-book"></i> <span class="align-middle">Posts</span>
+                </a>
+            </li>
+            <li class="sidebar-item" *ngIf="LoggedInUserRole != 'Admin'">
+                <a class="sidebar-link" (click)="addPost()">
+                    <i class="align-middle fa fa-users"></i> <span class="align-middle">Add Post</span>
                 </a>
             </li>
         </ul>
